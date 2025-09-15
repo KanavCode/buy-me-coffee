@@ -23,6 +23,30 @@ async function connect(){
     }
 }
 
+async function withdraw(){
+  if(typeof window.ethereum != "undefined"){
+    walletClient =createWalletClient({
+      transport : custom(window.ethereum)
+    })
+    const [connectedAccount] = await walletClient.requestAddresses()
+    const currentChain =await getCurrentChain(walletClient)
+    publicClient =createPublicClient({
+      transport : custom(window.ethereum)
+    })
+    const {request}=await publicClient.simulateContract({
+      address : contractAddress,
+      abi : coffeeAbi,
+      functionName :'withdraw',
+      account : connectedAccount,
+      chain : currentChain
+    })
+    const hash =await walletClient.writeContract(request);
+    console.log(hash);
+  }
+  else{
+    connectButton.innerHTML = "Please install MetaMask"
+  }
+}
 async function fund(){
     const ethAmount = ethAmountInput.value
     if (typeof window.ethereum != "undefined"){
@@ -82,5 +106,5 @@ async function getbalance(){
 }
 connectButton.onclick = connect
 funndButton.onclick= fund
-balanceButton.onclic= getbalance
+balanceButton.onclick= getbalance
 withdrawButton.onclick=withdraw

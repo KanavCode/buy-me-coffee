@@ -1,9 +1,11 @@
-import {createWalletClient , custom ,createPublicClient ,parseEther ,defineChain} from "https://esm.sh/viem";
+import {createWalletClient , custom ,createPublicClient ,parseEther ,defineChain, formatEther} from "https://esm.sh/viem";
 import {contractAddress , coffeeAbi} from "./constants-js.js";
 
 const connectButton = document.getElementById('connectButton')
 const funndButton = document.getElementById('fundButton')
 const ethAmountInput = document.getElementById('ethAmount')
+const balanceButton =document.getElementById('balanceButton')
+const withdrawButton = document.getElementById('withdrawButton')
 
 let walletClient
 let publicClient
@@ -66,5 +68,19 @@ async function getCurrentChain(client) {
   })
   return currentChain
 }
+
+async function getbalance(){
+  if(typeof window.ethereum != "undefined"){
+    publicClient = createPublicClient({
+      transport:custom(window.ethereum)
+    })
+    const balance = await publicClient.getBalance({
+      address : contractAddress
+    })
+    console.log(formatEther(balance))
+  }
+}
 connectButton.onclick = connect
 funndButton.onclick= fund
+balanceButton.onclic= getbalance
+withdrawButton.onclick=withdraw

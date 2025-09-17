@@ -14,10 +14,10 @@ body {
 
 /* Glassmorphism Card */
 .glass-card {
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.35); /* More transparent for visible background */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.22);
 }
 .border-gradient {
   border: 1px solid;
